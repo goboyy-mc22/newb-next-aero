@@ -226,6 +226,7 @@ vec3 renderEndNebula(vec3 viewDir,float t) {
     float cloudDetail = noise3(warped*2.75+vec3(4.8,17.2,9.6));
 
     float cloudShape = cloudLarge*0.62+cloudMedium*0.27+cloudDetail*0.11;
+
     float cloudMass = smoothstep(0.31,0.56,cloudShape);
     float cloudCore = smoothstep(0.53,0.72,cloudShape);
 
