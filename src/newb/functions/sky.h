@@ -228,7 +228,7 @@ vec3 renderOverworldSky(nl_skycolor skyCol, nl_environment env, vec3 viewDir, bo
   }
 vec3 renderEndSky(vec3 horizonCol, vec3 zenithCol, vec3 viewDir, float t) {
   // PREMIUM AERO STYLE: Memperlambat pergerakan nebula agar terasa megah dan kosmik
-  float skyTime *= 0.1; 
+  float skyTime = t*0.5; 
 
   // LAPISAN NEBULA 1: Membentuk gumpalan awan kosmik dengan distorsi matematis
   float n1 = 0.5 + 0.5*sin(4.0*viewDir.x + 4.0*viewDir.z + skyTime + 12.0*viewDir.x*viewDir.y);
