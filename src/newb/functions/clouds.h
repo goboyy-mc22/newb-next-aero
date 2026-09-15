@@ -70,212 +70,57 @@ vec4 renderCloudsSimple(nl_skycolor skycol, vec3 pos, highp float t, float rain)
 // rounded clouds
 
 // rounded clouds 3D density map
-float cloudDf(vec3 pos,float rain,vec2 boxiness) {
+float lmiCloudDf(vec3 pos,float rain,float time,vec2 boxiness) {
+  pos.x += 0.35*lmiCloudNoise(6.35*pos.xz)+0.05*time;
+  pos.y += 0.0*lmiCloudNoise(0.0*pos.xz);
+  pos.z += 0.35*lmiCloudNoise(6.35*pos.xz)+0.05*time;
   boxiness *= 0.999;
-
   vec2 p0 = floor(pos.xz);
-
-  vec2 u = max(
-    (pos.xz-p0-boxiness.x)/(1.0-boxiness.x),
-    0.0
-  );
-
-  u *= u*(3.0-2.0*u);
-
+  vec2 u = max((pos.xz-p0-boxiness)/(1.0-boxiness),0.0);
+  vec2 v = 1.0-u;
   vec4 r = vec4(
-    rand(p0),
-    rand(p0+vec2(1.0,0.0)),
-    rand(p0+vec2(1.0,1.0)),
-    rand(p0+vec2(0.0,1.0))
+    lmiCloudRand(p0),
+    lmiCloudRand(p0+vec2(1.0,0.0)),
+    lmiCloudRand(p0+vec2(1.0,1.0)),
+    lmiCloudRand(p0+vec2(0.0,1.0))
   );
-
-  // LMI rain transition
-  r = smoothstep(
-    0.1001+0.2*rain,
-    0.1+0.2*rain*rain,
-    r
-  );
-
-  float n = mix(
-    mix(r.x,r.y,u.x),
-    mix(r.w,r.z,u.x),
-    u.y
-  );
-
-  // rounded vertical profile
-  n *= 1.0-1.5*smoothstep(
-    boxiness.y,
-    2.0-boxiness.y,
-    2.0*abs(pos.y-0.5)
-  );
-
-  // LMI cloud shaping
-  n = max(
-    1.25*(n-0.2),
-    0.0
-  );
-
+  r = smoothstep(0.1001+0.2*rain,0.1+0.2*rain*rain,r);
+  float n = mix(mix(r.x,r.y,u.x),mix(r.w,r.z,u.x),u.y);
+  n *= 1.0-1.5*smoothstep(boxiness.y,2.0-boxiness.y,2.0*abs(pos.y-0.55));
+  n = max(1.0*(n-0.0),0.0);
   n *= n*(3.0-2.0*n);
-
   return n;
 }
 
 vec4 renderCloudsRounded(
-    vec3 vDir,
-    vec3 vPos,
-    float rain,
-    float time,
-    vec3 horizonCol,
-    vec3 zenithCol,
-    const int steps,
-    const float thickness,
-    const float thickness_rain,
-    const float speed,
-    const vec2 scale,
-    const float density,
-    const vec2 boxiness
+    vec3 vDir,vec3 vPos,float rain,float time,vec3 horizonCol,vec3 zenithCol,
+    const int steps,const float thickness,const float thickness_rain,const float speed,
+    const vec2 scale,const float density,const vec2 boxiness
 ) {
-  // LMI rounded cloud height
-  float height = 9.0*mix(
-    thickness,
-    thickness_rain,
-    rain
-  );
-
-  float stepsf = float(steps);
-
-  // scaled ray offset
+  float height=7.0*mix(thickness,thickness_rain,rain);
+  float stepsf=float(steps);
   vec3 deltaP;
-
-  deltaP.y = 1.0;
-
-  deltaP.xz =
-    height*scale*vDir.xz/
-    (0.02+0.98*abs(vDir.y));
-
-  // local cloud position
+  deltaP.y=1.0;
+  deltaP.xz=height*scale*vDir.xz/(0.02+0.98*abs(vDir.y));
   vec3 pos;
-
-  pos.y = 0.0;
-
-  pos.xz = scale*(
-    vPos.xz+
-    vec2(1.0,0.5)*
-    (time*speed)
-  );
-
-  pos += deltaP;
-
-  deltaP /= -stepsf;
-
-  // LMI-style cloud displacement
-  pos += deltaP*rand(
-  vPos.xz+time
-);
-  // alpha and vertical gradient
-  vec2 d = vec2(
-    0.0,
-    0.5
-  );
-
-  for (int i=1; i<=steps; i++) {
-    float m = cloudDf(
-      pos,
-      rain,
-      boxiness
-    );
-
-    d.x += m;
-
-    d.y = mix(
-      d.y,
-      pos.y,
-      m
-    );
-
-    pos += deltaP;
+  pos.y=0.0;
+  pos.xz=scale*(vPos.xz+vec2(1.0,0.5)*(time*speed));
+  pos+=deltaP;
+  deltaP/=-stepsf;
+  vec2 d=vec2(0.0,1.0);
+  for(int i=1;i<=steps;i++) {
+    float m=lmiCloudDf(pos,rain,time,boxiness);
+    d.x+=m;
+    d.y=mix(d.y,pos.y,m);
+    pos+=deltaP;
   }
-
-  // LMI alpha shaping
-  d.x *= smoothstep(
-    0.7,
-    1.0,
-    d.x
-  );
-
-  d.x /= (
-    stepsf/density
-  )+d.x;
-
-  if (vPos.y<0.0) {
-    d.y = 1.0-d.y;
-  }
-
-  // Aetheris soft cloud color
-  vec3 cloudBase = mix(
-    horizonCol,
-    zenithCol,
-    0.28
-  );
-
-  vec4 col = vec4(
-    cloudBase,
-    d.x
-  );
-
-  // cloud lighting
-  col.rgb += dot(
-    col.rgb,
-    vec3(0.3,0.4,0.3)
-  )*d.y*d.y;
-
-  col.rgb *= 1.0-0.68*rain;
-
-  // ==========================================
-  // NIGHT CLOUD DARKENING
-  // ==========================================
-
-  float cloudLight = dot(
-    0.5*(
-      horizonCol+
-      zenithCol
-    ),
-    vec3(
-      0.299,
-      0.587,
-      0.114
-    )
-  );
-
-  float nightMask = 1.0-smoothstep(
-    0.10,
-    0.34,
-    cloudLight
-  );
-
-  // darken clouds at night
-  col.rgb *= mix(
-    1.0,
-    0.20,
-    nightMask
-  );
-
-  // subtle moonlight
-  float moonLight = smoothstep(
-    0.15,
-    0.85,
-    d.y
-  );
-
-  col.rgb += vec3(
-    0.012,
-    0.020,
-    0.050
-  )*
-  nightMask*
-  moonLight*
-  col.a;
-
+  d.x*=smoothstep(1.0,1.4,d.x);
+  d.x/=(stepsf/density)+d.x;
+  if(vPos.y<0.0) d.y=1.0-d.y;
+  vec4 col=vec4(horizonCol+zenithCol,d.x);
+  col.rgb*=mix(0.2,1.01,d.y);
+  col.rgb+=dot(col.rgb,vec3(0.3,0.4,0.3))*d.y*d.y;
+  col.rgb*=0.8-0.6*rain;
   return col;
 }
 
