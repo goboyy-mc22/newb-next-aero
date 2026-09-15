@@ -54,7 +54,7 @@ vec4 nlWater(
 
   // mask sky reflection under shade
   if (!env.end) {
-    waterRefl *= 0.05 + lit.y*1.14;
+    waterRefl *= 0.04 + lit.y*0.98;
   }
 
   #ifdef NL_WATER_REFL_MASK
@@ -66,8 +66,39 @@ vec4 nlWater(
   float fresnel = calculateFresnel(cosR, 0.07);
   float opacity = 1.0-cosR;
 
-  color.rgb *= 0.22*NL_WATER_TINT*(1.0-0.8*fresnel);
-  color.a = mix(COLOR.a*NL_WATER_TRANSPARENCY, 1.0, opacity*opacity);
+      // tropical water color
+  vec3 waterBase = vec3(0.22,0.58,0.38);
+
+  // underwater depth
+  float depth = clamp(1.0-cosR,0.0,1.0);
+  depth *= depth;
+
+  // deeper water becomes richer green
+  waterBase = mix(
+    vec3(0.30,0.66,0.44),
+    vec3(0.12,0.42,0.28),
+    depth
+  );
+
+  // very subtle sky reflection
+  waterRefl *= 0.12+0.10*fresnel;
+
+  // tropical water dominates
+  color.rgb = mix(
+    color.rgb,
+    waterBase,
+    0.72
+  );
+
+  // very subtle reflection
+  color.rgb += waterRefl*0.08;
+
+  // transparency
+  color.a = mix(
+    COLOR.a*NL_WATER_TRANSPARENCY,
+    1.0,
+    opacity*opacity
+  );
 
   #ifdef NL_WATER_WAVE
     if (camDist < 14.0) {

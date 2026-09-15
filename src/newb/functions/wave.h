@@ -22,8 +22,8 @@ void lanternWave(
   if (uv1.x > 0.6 && (isChain || isLantern)) {
     // simple wave for angle
     float phase = dot(floor(cPos), vec3_splat(0.3927));
-    vec2 theta = vec2(t + phase, t*1.4 + phase);
-    theta = sin(vec2(theta.x,theta.x+0.7)) + rainFactor*sin(vec2(theta.y,theta.y+0.7));
+    vec2 theta = vec2(t + phase, t*1.25 + phase);
+    theta = sin(vec2(theta.x, theta.x + 0.6)) + rainFactor*0.8*sin(vec2(theta.y, theta.y + 0.6));
     theta *= NL_LANTERN_WAVE*windStrength;
 
     vec2 sinA = sin(theta);
@@ -40,7 +40,7 @@ void lanternWave(
 
 #ifdef NL_EXTRA_PLANTS_WAVE
 void extraPlantsFlag(inout bool shouldWave, vec2 uv0, bool isTop) {
-  // 1.26.40 (1024x512) vanilla only
+  // 1.26.31 (1024x512) vanilla only
   // not meant to be used
 
   // count texture atlas in left-to-right row wise order (64X32)
@@ -48,54 +48,25 @@ void extraPlantsFlag(inout bool shouldWave, vec2 uv0, bool isTop) {
   int texN = 64*int(uv0.y*32.0) + int(uv0.x*64.0);
 
   if ( // full
-    (texN>=18 && texN<=20) || // Azeala Leaves and Flowering Azeala Leaves
-    (texN>=177 && texN<=180) || // Cave Vines
-    (texN>=186 && texN<=187) || // Cherrry Leaves (Fixed) 
-    (texN>=444 && texN<=459) || (texN==678) || // tall flowers/plants top
-    (texN>=796 && texN<=797) || // Pale Hanging Moss
-    (texN>=803 && texN<=804) || // Pale Oak Leaves
-    (texN>=832 && texN<=834) || (texN>=837 && texN<=838) // Pitcher Plant
+    (texN>184 && texN<187) || // cherrry leaves
+    (texN>452 && texN<462) // tall flowers/plants top
   ) {
     shouldWave = true;
   } else if ( // top only
-    (texN==6) || // Acacia Sappling
-    (texN==8) || // Allium (NEW
-    (texN==25) || // Azure Bluet (NEW
-    (texN==85) || // Birch sappling
-    (texN==110) || // Blue Orchid
-    (texN==145) || // Cactus Flower
-    (texN==192) || // Cherry Blossom Sapling
-    (texN==223) || // Closed Eyeblossom
-    (texN==336) || // Cornflower
-    (texN==387) || // Dandelion
-    (texN==390) || // Dark Oak Sappling
-    (texN==396) || // Dead Bush
+    (texN==192) || // cherry blossom sapling
+    (texN==1013) || // spore blossom petal
     (texN>445 && texN<453) || // tall flowers/plants bottom
-    (texN>=530 && texN<=531) || // Firefly Bush
-    (texN==564) || // Golden Dandelion
-    (texN==642) || // Jungle Sappling
-    (texN==679) || // Lily of the Valley
-    (texN>=715 && texN<=717) || // Mangrove Propagule
-    (texN==753) || // Oak Sappling
-    (texN>=761 && texN<=763) || // Open Eyeblossom
-    (texN==773) || // Orange Tulip
-    (texN==774) || // Oxeye Daisy
-    (texN==808) || // Pale Oak Sappling
-    (texN==823) || // Pink Tulip (New)
-    (texN==861) || // Poppy
-    (texN==914) || // Red Tulip
-    (texN==915) || // White Tilip
-    (texN==945) ||  // Spruce Sappling
-    (texN==1011) || // Spore Blossom Petal
-    (texN>=1079 && texN<=1082) || // Sweet Berries Bush
-    (texN==1084) || // Tall Dry Grass
-    (texN>=1090 && texN<=1092) || // Torch Flowers
-    (texN==1187) // Wither Rose
+    (texN>1080 && texN<1085) || // sweet berries bush
+    (texN>1091 && texN<1095) || // torch flowers
+    (texN==1189) || // wither rose
+    (texN==389)  || // yellow dandelion
+    (texN==863)  || // red rose
+    (texN>531 && texN<534) // firefly bush
   ) {
     shouldWave = isTop;
   } else if ( // bottom only
-    (texN==23 || texN==547) ||  // Azeala
-    (texN==610) // Hanging Roots
+    (texN==612) || // hanging roots
+    (texN==23 || texN==549)  // azeala
   ) { 
     shouldWave = !isTop;
   }
@@ -129,13 +100,13 @@ void nlWave(
   bool isLeafLitter = bPos.y==0.015625 && (bPosH.x+bPosH.y)==0.0;
   bool shouldWave = ((isTreeLeaves || isPlants || isVines) && isColored && !isLeafLitter) || (isFarmPlant && isTop);
 
-  float windStrength = lit.y*(noise1D(t*0.36) + rainFactor*0.4)*(1.0-waveFade);
+  float windStrength = lit.y*(0.9*noise1D(t*0.32) + rainFactor*0.35)*(1.0-waveFade);
 
   // darken farm plants bottom
-  light *= isFarmPlant && !isTop ? 0.7 : 1.1;
+  light *= isFarmPlant && !isTop ? 0.75 : 1.08;
   if (isColored && !isTreeLeaves && !isLeafLitter && uv0.y>0.214 && uv0.y<0.502 && !isRedStone) {
     // make grass bottom more dark depending how deep it is
-    light *= mix(isTop ? 1.2 : 1.2 - 1.2*(bPos.y>0.0 ? 1.5-bPos.y : 0.5), 1.0, waveFade);
+    light *= mix(isTop ? 1.15 : 1.15 - 1.05*(bPos.y>0.0 ? 1.5-bPos.y : 0.5), 1.0, waveFade);
   }
 
   #ifdef NL_PLANTS_WAVE
@@ -148,7 +119,7 @@ void nlWave(
       float wave = NL_PLANTS_WAVE*windStrength;
 
       if (isTreeLeaves) {
-        wave *= 0.5;
+        wave *= 0.55;
       } else if (isVines) {
         wave *= fract(0.01+tiledCpos.y*0.5);
       } else if (isPlants && isColored && !isTop) {
@@ -160,7 +131,7 @@ void nlWave(
       float phaseDiff = dot(cPos,vec3_splat(PI_QUART)) + fastRand(tiledCpos.xz + tiledCpos.y);
       wave *= 1.0 + mix(
         sin(t*NL_WAVE_SPEED + phaseDiff),
-        sin(t*NL_WAVE_SPEED*1.5 + phaseDiff),
+        sin(t*NL_WAVE_SPEED*1.35 + phaseDiff),
         rainFactor);
 
       //worldPos.y -= 1.0-sqrt(1.0-wave*wave);
