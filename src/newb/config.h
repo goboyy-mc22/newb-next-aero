@@ -49,8 +49,8 @@
 #define NL_END_AMBIENT    vec3(1.72,1.42,2.52)
 
 /* Sun/moon light color */
-#define NL_DAWN_SUNLIGHT_COL   vec3(1.15,0.48,0.22)
-#define NL_NOON_SUNLIGHT_COL   vec3(0.98,0.92,0.82)
+#define NL_DAWN_SUNLIGHT_COL   vec3(1.0,0.95,0.95)
+#define NL_NOON_SUNLIGHT_COL   vec3(0.9,0.9,1.0)
 #define NL_NIGHT_MOONLIGHT_COL vec3(0.05,0.10,0.26)
 
 /* Torch colors */
@@ -196,7 +196,7 @@
 #define NL_MOON_TILT       45.0 // 0.0 no tilt ~ 90.0 tilt of 90 degrees
 
 /* Fake godrays during sunrise/sunset */
-#define NL_GODRAY 0.8 // [toggle] 0.1 subtle ~ 0.8 strong
+#define NL_GODRAY 1.0  // [toggle] 0.1 subtle ~ 0.8 strong
 
 /* Sky reflection */
 //#define NL_GROUND_REFL 0.3       // [toggle] 0.2 slightly reflective ~ 1.0 fully reflect sky
