@@ -146,11 +146,11 @@ vec3 renderOverworldSky(nl_skycolor skyCol, nl_environment env, vec3 viewDir, bo
   #define NL_BH_DIST 1.8
   #define NL_BH_SPEED 0.2
 
-  vec4 renderBlackhole(vec3 vdir, float t) {
+  vec4 renderBlackhole(vec3 viewdir, float t) {
   t *= NL_BH_SPEED;
 
   float r = 2.4;
-  vec3 vr = vdir;
+  vec3 vr = viewdir;
 
   float cr = cos(r);
   float sr = sin(r);
@@ -203,29 +203,14 @@ vec3 renderOverworldSky(nl_skycolor skyCol, nl_environment env, vec3 viewDir, bo
   df *=
     0.9+
     0.1*sin(
-      8.0*vd.z+
-      d+
-      4.0*t-
-      4.0*df
-    );
+      8.0*vd.z+d+4.0*t-4.0*df);
 
-  bh *=
-    1.0+
-    pow(df,4.0)*
-    hole*
-    max(1.0-bh,0.0);
-
-  vec3 col =
-    bh*
-    4.0*
-    mix(
-      NL_BH_COL_LOW,
-      NL_BH_COL_HIGH,
-      min(bh,1.0)
-    );
+  bh *= 1.0+pow(df,4.0)*hole*max(1.0-bh,0.0);
+  vec3 col = bh*4.0*mix(NL_BH_COL_LOW,NL_BH_COL_HIGH,min(bh,1.0));
 
   return vec4(col,hole);
-  }
+}
+
 vec3 renderEndSky(vec3 horizonCol, vec3 zenithCol, vec3 viewDir, float t) {
   // PREMIUM AERO STYLE: Memperlambat pergerakan nebula agar terasa megah dan kosmik
   float skyTime = t*0.5; 
