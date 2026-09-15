@@ -29,13 +29,11 @@ bool detectUnderwater(vec3 FOG_COLOR, vec2 FOG_CONTROL) {
 }
 
 float detectRain(vec3 FOG_CONTROL) {
-  // clear fogctrl.x varies with render distance (z)
-  // reverse plotted as 0.5 + 1.25/k (k is renderdistance in chunks, fogctrl.z = k*16)
-  vec2 clear = vec2(0.5 + 18.0/FOG_CONTROL.z, 1.0); // clear fogctrl value
-  vec2 rain = vec2(0.24, 0.72); // rain fogctrl value
-  vec2 factor = clamp((FOG_CONTROL.xy-clear)/(rain-clear), vec2(0.0,0.0), vec2(1.0,1.0));
+  vec2 clear = vec2(0.5 + 18.0/FOG_CONTROL.z, 1.0);
+  vec2 rain = vec2(0.24, 0.72);
+  vec2 factor = clamp((FOG_CONTROL.xy-clear)/(rain-clear), vec2(0.0), vec2(1.0));
   float val = factor.x*factor.y;
-  return val*val*(3.0 - 2.0*val);
+  return smoothstep(0.0,1.0,val);
 }
 
 float detectDayFactor(vec3 FOG_COLOR) {
