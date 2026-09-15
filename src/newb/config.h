@@ -62,13 +62,13 @@
 /* Fog */
 #define NL_FOG 1.0                // [toggle] 0.1 subtle ~ 1.0 blend with sky completely
 #define NL_MIST_DENSITY 0.4      // 0.0 no mist ~ 1.0 misty
-#define NL_RAIN_MIST_OPACITY 0.1 // [toggle] 0.04 very subtle ~ 0.5 thick rain mist blow
+#define NL_RAIN_MIST_OPACITY 0.25 // [toggle] 0.04 very subtle ~ 0.5 thick rain mist blow
 #define NL_CLOUDY_FOG 0.01         // [toggle] 0.0 subtle - 0.8 dense fog clouds
 
 /* Sky */
 #define NL_SKY_VOID_FACTOR     0.38
 #define NL_SKY_VOID_DARKNESS   0.18
-#define NL_SKY_RAIN_MIX_FACTOR 0.82
+#define NL_SKY_RAIN_MIX_FACTOR 1.0
 
 /* Sky colors - zenith=top, horizon=bottom */
 #define NL_DAWN_ZENITH_COL   vec3(0.42,0.56,1.08)
@@ -80,8 +80,8 @@
 #define NL_NIGHT_ZENITH_COL  vec3(0.018,0.066,0.17)
 #define NL_NIGHT_HORIZON_COL vec3(0.042,0.096,0.20)
 #define NL_NIGHT_EDGE_COL    vec3(0.072,0.132,0.22)
-#define NL_RAIN_ZENITH_COL   vec3(0.54,0.64,0.76)
-#define NL_RAIN_HORIZON_COL  vec3(0.76,0.86,0.94)
+#define NL_RAIN_ZENITH_COL   vec3(0.20,0.27,0.36)
+#define NL_RAIN_HORIZON_COL  vec3(0.42,0.50,0.58)
 
 #define NL_END_ZENITH_COL    vec3(0.10,0.04,0.23)
 #define NL_END_HORIZON_COL   vec3(0.52,0.14,0.70)
