@@ -229,6 +229,11 @@ vec3 renderOverworldSky(nl_skycolor skyCol, nl_environment env, vec3 viewDir, bo
 vec3 renderEndSky(vec3 horizonCol, vec3 zenithCol, vec3 viewDir, float t) {
   // PREMIUM AERO STYLE: Memperlambat pergerakan nebula agar terasa megah dan kosmik
   float skyTime = t*0.5; 
+  float a = atan2(viewDir.x,viewDir.z);
+    vec3 dir = normalize(viewDir);
+    float grad = 0.5+0.5*dir.y;
+    float horizon = 1.0-smoothstep(-0.25,0.8,dir.y);
+    vec3 sky = mix(zenithCol,horizonCol,pow(1.0-grad,1.35));
 
   // LAPISAN NEBULA 1: Membentuk gumpalan awan kosmik dengan distorsi matematis
   float n1 = 0.5 + 0.5*sin(4.0*viewDir.x + 4.0*viewDir.z + skyTime + 12.0*viewDir.x*viewDir.y);
@@ -262,8 +267,28 @@ vec3 renderEndSky(vec3 horizonCol, vec3 zenithCol, vec3 viewDir, float t) {
   // 3. Efek Spektrum Aurora: Memberikan bias warna pelangi tipis (cyan-violet) di celah-celah kegelapan
   sky += 0.12*streaks*spectrum(sin(2.2*viewDir.x*viewDir.y + t))*vec3(0.50,0.16,0.78);
 
-  vec4 bh = renderBlackhole(viewDir, t);
-  sky += bh.rgb;
+  vec3 starCell = floor(dir*185.0);
+  vec3 rnd = hash33(starCell);
+
+    float starChance = step(0.980,rnd.x);
+    float starDist = length(fract(dir*185.0)-0.5);
+    float starRadius = mix(0.105,0.18,rnd.y);
+    float starPoint = 1.0-smoothstep(starRadius,starRadius*1.45,starDist);
+
+    vec3 starColor = vec3(1.0,0.93,0.82);
+
+    if (rnd.x > 0.978) {
+        starColor = vec3(0.55,0.72,1.0);
+    }
+    if (rnd.x > 0.988) {
+        starColor = vec3(0.72,0.55,1.0);
+    }
+    if (rnd.x > 0.995) {
+        starColor = vec3(0.55,0.9,1.0);
+    }
+    
+    float star = starPoint*starChance;
+    sky += starColor*star*1.35;
   
   return sky;
 }
