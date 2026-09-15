@@ -211,9 +211,6 @@ vec3 renderEndSky(vec3 horizonCol, vec3 zenithCol, vec3 viewDir, float t) {
   float skyTime = t*0.5; 
   float a = atan2(viewDir.x,viewDir.z);
     vec3 dir = normalize(viewDir);
-    float grad = 0.5+0.5*dir.y;
-    float horizon = 1.0-smoothstep(-0.25,0.8,dir.y);
-    vec3 sky = mix(zenithCol,horizonCol,pow(1.0-grad,1.35));
 
   // LAPISAN NEBULA 1: Membentuk gumpalan awan kosmik dengan distorsi matematis
   float n1 = 0.5 + 0.5*sin(4.0*viewDir.x + 4.0*viewDir.z + skyTime + 12.0*viewDir.x*viewDir.y);
