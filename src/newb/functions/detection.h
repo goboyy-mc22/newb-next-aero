@@ -31,7 +31,7 @@ bool detectUnderwater(vec3 FOG_COLOR, vec2 FOG_CONTROL) {
 float detectRain(vec3 FOG_CONTROL) {
   vec2 clear = vec2(0.5 + 18.0/FOG_CONTROL.z, 1.0);
   vec2 rain = vec2(0.24, 0.72);
-  vec2 factor = clamp((FOG_CONTROL.xy-clear)/(rain-clear), vec2(0.0), vec2(1.0));
+  vec2 factor = clamp((FOG_CONTROL.xy-clear)/(rain-clear), vec2(0.0, 0.0), vec2(1.0, 1.0));
   float val = factor.x*factor.y;
   return smoothstep(0.0,1.0,val);
 }
