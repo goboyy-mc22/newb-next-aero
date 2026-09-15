@@ -30,7 +30,7 @@
 /* Color correction */
 #define NL_TONEMAP_TYPE 4              // 1:Exponential, 2:Reinhard, 3:Extended Reinhard, 4:ACES
 #define NL_GAMMA 1.2                  // 0.3 low ~ 2.0 high
-#define NL_EXPOSURE 1.4              // [toggle] 0.5 dark ~ 3.0 bright
+#define NL_EXPOSURE 1.3              // [toggle] 0.5 dark ~ 3.0 bright
 #define NL_SATURATION 1.1            // [toggle] 0.0 grayscale ~ 4.0 super saturated
 #define NL_TINT                      // [toggle] enable light/dark tone tinting
 #define NL_TINT_LOW  vec3(1.0,1.0,1.1) // color tint for dark tone
@@ -112,7 +112,7 @@
 #define NL_WATER_TEX_OPACITY 0.1  // 0.0 plain water ~ 1.0 vanilla water texture
 #define NL_WATER_WAVE             // [toggle] wave effect
 //#define NL_WATER_REFL_MASK      // [toggle] fake water reflection mask
-#define NL_WATER_TINT vec3(0.0,0.08,0.12)
+#define NL_WATER_TINT vec3(0.0,0.08,0.18)
 
 /* Underwater */
 #define NL_UNDERWATER_BRIGHTNESS 1.65         // 0.0 dark ~ 3.0 bright
