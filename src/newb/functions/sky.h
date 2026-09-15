@@ -113,7 +113,7 @@ vec3 renderOverworldSky(nl_skycolor skyCol, nl_environment env, vec3 viewDir, bo
     float source = max(0.0, (mg8-0.22)/0.78);
     source *= source;
     source *= source;
-    sky *= 1.0 + 20.0*source*(1.0-env.rainFactor);
+    sky *= 1.0 + 18.0*source*(1.0-env.rainFactor);
     
     //sunset glow
     float sunsetGlow = max(0.0,1.0-abs(env.dayFactor));
@@ -141,10 +141,10 @@ vec3 renderOverworldSky(nl_skycolor skyCol, nl_environment env, vec3 viewDir, bo
 
 // Author: devendrn, Title: Simple blackhole, License: CC BY-SA 4.0
 
-  #define NL_BH_COL_LOW  vec3(0.035,0.008,0.075)
+  #define NL_BH_COL_LOW  vec3(0.0,0.0,0.0)
   #define NL_BH_COL_HIGH vec3(0.52,0.10,0.72)
   #define NL_BH_DIST 1.35
-  #define NL_BH_SPEED 0.18
+  #define NL_BH_SPEED 0.2
 
   vec4 renderBlackhole(vec3 vdir, float t) {
   t *= NL_BH_SPEED;
@@ -228,12 +228,12 @@ vec3 renderOverworldSky(nl_skycolor skyCol, nl_environment env, vec3 viewDir, bo
   }
 vec3 renderEndSky(vec3 horizonCol, vec3 zenithCol, vec3 viewDir, float t) {
   // PREMIUM AERO STYLE: Memperlambat pergerakan nebula agar terasa megah dan kosmik
-  t *= 0.08; 
+  float skyTime *= 0.1; 
 
   // LAPISAN NEBULA 1: Membentuk gumpalan awan kosmik dengan distorsi matematis
-  float n1 = 0.5 + 0.5*sin(4.0*viewDir.x + 4.0*viewDir.z + t + 12.0*viewDir.x*viewDir.y);
+  float n1 = 0.5 + 0.5*sin(4.0*viewDir.x + 4.0*viewDir.z + skyTime + 12.0*viewDir.x*viewDir.y);
   // LAPISAN NEBULA 2: Memberikan efek riak detail yang acak pada tepian awan kosmik
-  float n2 = 0.5 + 0.5*sin(6.0*viewDir.x - 5.0*viewDir.z + 0.4*t + 6.0*n1 + 0.1*sin(45.0*viewDir.z - 3.5*t));
+  float n2 = 0.5 + 0.5*sin(6.0*viewDir.x - 5.0*viewDir.z + 0.4*skyTime + 6.0*n1 + 0.1*sin(45.0*viewDir.z - 3.5*skyTime));
   
   // Penggabungan gelombang awan kosmik
   float waves = 0.75*n2*n1 + 0.25*n1;
@@ -277,18 +277,18 @@ vec3 nlRenderSky(nl_skycolor skycol, nl_environment env, vec3 viewDir, float t, 
   } else {
     sky = renderOverworldSky(skycol, env, viewDir, isSkyPlane);
     #ifdef NL_UNDERWATER_STREAKS
-      // if (env.underwater) {
-      //   float a = atan2(viewDir.x, viewDir.z);
-      //   float grad = 0.5 + 0.5*viewDir.y;
-      //   grad *= grad;
-      //   float spread = (0.5 + 0.5*sin(3.0*a + 0.2*t + 2.0*sin(5.0*a - 0.4*t)));
-      //   spread *= (0.5 + 0.5*sin(3.0*a - sin(0.5*t)))*grad;
-      //   spread += (1.0-spread)*grad;
-      //   float streaks = spread*spread;
-      //   streaks *= streaks;
-      //   streaks = (spread + 3.0*grad*grad + 4.0*streaks*streaks);
-      //   sky += 2.0*streaks*skycol.horizon;
-      // }
+       if (env.underwater) {
+         float a = atan2(viewDir.x, viewDir.z);
+         float grad = 0.5 + 0.5*viewDir.y;
+         grad *= grad;
+         float spread = (0.5 + 0.5*sin(3.0*a + 0.2*t + 2.0*sin(5.0*a - 0.4*t)));
+         spread *= (0.5 + 0.5*sin(3.0*a - sin(0.5*t)))*grad;
+         spread += (1.0-spread)*grad;
+         float streaks = spread*spread;
+         streaks *= streaks;
+         streaks = (spread + 3.0*grad*grad + 4.0*streaks*streaks);
+         sky += 2.0*streaks*skycol.horizon;
+       }
     #endif
   }
 
