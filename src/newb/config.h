@@ -86,6 +86,12 @@
 #define NL_END_ZENITH_COL    vec3(0.10,0.04,0.23)
 #define NL_END_HORIZON_COL   vec3(0.52,0.14,0.70)
 
+/* black hole */
+#define NL_BLACKHOLE
+#define NL_BH_COL_LOW  vec3(0.0,0.0,0.0)
+#define NL_BH_COL_HIGH vec3(0.52,0.10,0.72)
+#define NL_BH_DIST 1.8
+#define NL_BH_SPEED 0.2
 
 /* Rainbow */
 //#define NL_RAINBOW           // [toggle] enable rainbow in sky
