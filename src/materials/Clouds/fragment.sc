@@ -46,7 +46,7 @@ void main() {
 
       #ifdef NL_AURORA
         p.xy *= 34.7;
-        color += renderAurora(p.xyy, v_color2.w, v_color1.w, v_color2.rgb)*(1.0-0.95*color.a);
+        color += renderAurora(p.xyy, v_color2.w, v_color1.w, v_color2.rgb)*(0.25-0.2*color.a);
       #endif
 
       color.a *= smoothstep(0.0, 0.7, vDir.y);
