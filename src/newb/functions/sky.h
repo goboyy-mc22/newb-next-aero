@@ -143,7 +143,7 @@ vec3 renderOverworldSky(nl_skycolor skyCol, nl_environment env, vec3 viewDir, bo
 
   #define NL_BH_COL_LOW  vec3(0.0,0.0,0.0)
   #define NL_BH_COL_HIGH vec3(0.52,0.10,0.72)
-  #define NL_BH_DIST 1.35
+  #define NL_BH_DIST 1.8
   #define NL_BH_SPEED 0.2
 
   vec4 renderBlackhole(vec3 vdir, float t) {
