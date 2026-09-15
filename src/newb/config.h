@@ -37,7 +37,7 @@
 #define NL_TINT_HIGH vec3(1.0,1.0,1.1) // color tint for light tone
 
 /* Lighting */
-#define NL_SUNLIGHT_INTENSITY   3.0  // 1.0 weak ~ 5.0 bright
+#define NL_SUNLIGHT_INTENSITY   3.3  // 1.0 weak ~ 5.0 bright
 #define NL_TORCHLIGHT_INTENSITY 1.5  // 0.5 weak ~ 3.0 bright
 #define NL_SHADOW_INTENSITY     1.0  // 0.0 no shadow ~ 1.0 strong shadow
 #define NL_MIN_LIGHTING_BOOST   2.0  // 1.0 minimal lighting boost for dark areas ~ 3.0 brighter dark areas
@@ -112,7 +112,7 @@
 #define NL_WATER_TEX_OPACITY 0.1  // 0.0 plain water ~ 1.0 vanilla water texture
 #define NL_WATER_WAVE             // [toggle] wave effect
 //#define NL_WATER_REFL_MASK      // [toggle] fake water reflection mask
-#define NL_WATER_TINT vec3(0.0,0.08,0.18)
+#define NL_WATER_TINT vec3(0.0,0.08,0.22)
 
 /* Underwater */
 #define NL_UNDERWATER_BRIGHTNESS 1.65         // 0.0 dark ~ 3.0 bright
@@ -140,8 +140,8 @@
 /* Rounded cloud settings */
 #define NL_CLOUD2_THICKNESS 3.9           // 0.5 slim ~ 5.0 fat
 #define NL_CLOUD2_RAIN_THICKNESS 4.4       // 0.5 slim ~ 5.0 fat
-#define NL_CLOUD2_STEPS 5                  // 3 low quality ~ 16 high quality
-#define NL_CLOUD2_SCALE vec2(0.03, 0.03) // 0.003 large ~ 0.3 tiny
+#define NL_CLOUD2_STEPS 6                  // 3 low quality ~ 16 high quality
+#define NL_CLOUD2_SCALE vec2(0.025, 0.025) // 0.003 large ~ 0.3 tiny
 #define NL_CLOUD2_SHAPE vec2(0.5, 0.5)     // 0.0 round ~ 1.0 box vec2(horizontal shape, vertical shape)
 #define NL_CLOUD2_DENSITY 48.0             // 1.0 blurry ~ 100.0 sharp
 #define NL_CLOUD2_VELOCITY 0.5             // 0.0 static ~ 4.0 very fast
@@ -164,8 +164,8 @@
 /* Aurora settings */
 #define NL_AURORA 3.5           // [toggle] 0.4 dim ~ 4.0 very bright
 #define NL_AURORA_VELOCITY 0.012 // 0.0 static ~ 0.3 very fast
-#define NL_AURORA_SCALE 0.020    // 0.002 large ~ 0.4 tiny
-#define NL_AURORA_WIDTH 0.10    // 0.04 thin line ~ 0.4 thick lines
+#define NL_AURORA_SCALE 0.05    // 0.002 large ~ 0.4 tiny
+#define NL_AURORA_WIDTH 0.09   // 0.04 thin line ~ 0.4 thick lines
 #define NL_AURORA_COL1 vec3(1.0,0.0,1.0)
 #define NL_AURORA_COL2 vec3(0.0,1.0,1.0)
 
@@ -196,10 +196,10 @@
 #define NL_MOON_TILT       45.0 // 0.0 no tilt ~ 90.0 tilt of 90 degrees
 
 /* Fake godrays during sunrise/sunset */
-#define NL_GODRAY 1.0  // [toggle] 0.1 subtle ~ 0.8 strong
+#define NL_GODRAY 0.8 // [toggle] 0.1 subtle ~ 0.8 strong
 
 /* Sky reflection */
-//#define NL_GROUND_REFL 0.3       // [toggle] 0.2 slightly reflective ~ 1.0 fully reflect sky
+#define NL_GROUND_REFL 1.0      // [toggle] 0.2 slightly reflective ~ 1.0 fully reflect sky
 #define NL_GROUND_RAIN_WETNESS 1.0 // 0.0 no wetness ~ 1.0 fully wet blocks when raining
 #define NL_GROUND_RAIN_PUDDLES 0.7 // 0.0 no puddles ~ 1.0 puddles
 
