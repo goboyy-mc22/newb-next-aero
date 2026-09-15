@@ -57,9 +57,9 @@ No wave effects
 
 [[subpack]]
 define = "REALISTIC_CLOUDS"
-materials = ["Clouds, RenderChunk"]
-description= '''
-Realistic Clouds
+materials = ["Clouds", "RenderChunk"]
+description = '''
+Realistic clouds
 '''
 
 [[subpack]]
