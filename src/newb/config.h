@@ -46,7 +46,7 @@
 
 /* Ambient light for nether/end */
 #define NL_NETHER_AMBIENT vec3(2.90,2.08,1.86)
-#define NL_END_AMBIENT    vec3(1.72,1.42,2.52)
+#define NL_END_AMBIENT    vec3(1.2,1.1,1.4)
 
 /* Sun/moon light color */
 #define NL_DAWN_SUNLIGHT_COL   vec3(1.0,0.95,0.95)
@@ -150,7 +150,7 @@
 #define NL_CLOUD2_SCALE vec2(0.025, 0.025) // 0.003 large ~ 0.3 tiny
 #define NL_CLOUD2_SHAPE vec2(0.5, 0.5)     // 0.0 round ~ 1.0 box vec2(horizontal shape, vertical shape)
 #define NL_CLOUD2_DENSITY 48.0             // 1.0 blurry ~ 100.0 sharp
-#define NL_CLOUD2_VELOCITY 0.5             // 0.0 static ~ 4.0 very fast
+#define NL_CLOUD2_VELOCITY 0.05             // 0.0 static ~ 4.0 very fast
 //#define NL_CLOUD2_LAYER2                      // [toggle] extra cloud layer
 #define NL_CLOUD2_LAYER2_OFFSET 143.0           // 30.0 near ~ 300.0 very high
 #define NL_CLOUD2_LAYER2_THICKNESS 2.5          // 0.7 slim ~ 5.0 fat
@@ -168,10 +168,10 @@
 #define NL_CLOUD3_SHADOW_OFFSET 0.3      // 0.05 minimal ~ 1.0 large
 
 /* Aurora settings */
-#define NL_AURORA 3.5           // [toggle] 0.4 dim ~ 4.0 very bright
+#define NL_AURORA 1.4          // [toggle] 0.4 dim ~ 4.0 very bright
 #define NL_AURORA_VELOCITY 0.012 // 0.0 static ~ 0.3 very fast
-#define NL_AURORA_SCALE 0.05    // 0.002 large ~ 0.4 tiny
-#define NL_AURORA_WIDTH 0.09   // 0.04 thin line ~ 0.4 thick lines
+#define NL_AURORA_SCALE 0.1    // 0.002 large ~ 0.4 tiny
+#define NL_AURORA_WIDTH 0.06   // 0.04 thin line ~ 0.4 thick lines
 #define NL_AURORA_COL1 vec3(1.0,0.0,1.0)
 #define NL_AURORA_COL2 vec3(0.0,1.0,1.0)
 
