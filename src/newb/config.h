@@ -124,7 +124,7 @@
 #define NL_CLOUD2_SCALE vec2(0.025, 0.025) // 0.003 large ~ 0.3 tiny
 #define NL_CLOUD2_SHAPE vec2(0.5, 0.5)     // 0.0 round ~ 1.0 box vec2(horizontal shape, vertical shape)
 #define NL_CLOUD2_DENSITY 48.0             // 1.0 blurry ~ 100.0 sharp
-#define NL_CLOUD2_VELOCITY 0.0015             // 0.0 static ~ 4.0 very fast
+#define NL_CLOUD2_VELOCITY 0.0005             // 0.0 static ~ 4.0 very fast
 //#define NL_CLOUD2_LAYER2                      // [toggle] extra cloud layer
 #define NL_CLOUD2_LAYER2_OFFSET 143.0           // 30.0 near ~ 300.0 very high
 #define NL_CLOUD2_LAYER2_THICKNESS 2.5          // 0.7 slim ~ 5.0 fat
@@ -142,7 +142,7 @@
 #define NL_CLOUD3_SHADOW_OFFSET 0.3      // 0.05 minimal ~ 1.0 large
 
 /* Aurora settings */
-#define NL_AURORA 1.2          // [toggle] 0.4 dim ~ 4.0 very bright
+#define NL_AURORA 1.0          // [toggle] 0.4 dim ~ 4.0 very bright
 #define NL_AURORA_VELOCITY 0.012 // 0.0 static ~ 0.3 very fast
 #define NL_AURORA_SCALE 0.1    // 0.002 large ~ 0.4 tiny
 #define NL_AURORA_WIDTH 0.06   // 0.04 thin line ~ 0.4 thick lines
@@ -176,7 +176,7 @@
 #define NL_MOON_TILT       45.0 // 0.0 no tilt ~ 90.0 tilt of 90 degrees
 
 /* Fake godrays during sunrise/sunset */
-#define NL_GODRAY 0.8 // [toggle] 0.1 subtle ~ 0.8 strong
+#define NL_GODRAY 0.3 // [toggle] 0.1 subtle ~ 0.8 strong
 
 /* Sky reflection */
 //#define NL_GROUND_REFL 1.0      // [toggle] 0.2 slightly reflective ~ 1.0 fully reflect sky
