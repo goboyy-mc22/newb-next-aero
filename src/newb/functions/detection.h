@@ -61,9 +61,10 @@ vec3 moonDir = vec3(-sunDir.x, -sunDir.y, 0.0);
 }
 
 nl_environment nlDetectEnvironment(
+    float DIMENSION_ID,
     float TIME_OF_DAY,
-    vec3 FOG_COLOR,
-    vec3 FOG_CONTROL
+    float3 FOG_COLOR,
+    float3 FOG_CONTROL
 ){
   nl_environment env;
   env.end = detectEnd(FOG_COLOR);
