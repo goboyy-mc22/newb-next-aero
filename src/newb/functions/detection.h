@@ -64,8 +64,8 @@ nl_environment nlDetectEnvironment(
     float DIMENSION_ID,
     float TIME_OF_DAY,
     float DAY,
-    float3 FOG_COLOR,
-    float3 FOG_CONTROL
+    vec3 FOG_COLOR,
+    vec3 FOG_CONTROL
 ){
   nl_environment env;
   env.end = detectEnd(FOG_COLOR);
