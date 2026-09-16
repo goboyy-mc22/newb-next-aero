@@ -14,10 +14,8 @@ struct nl_environment {
   vec3 fogCol;
 };
 
-bool detectEnd(vec3 FOG_COLOR) {
-    return FOG_COLOR.g < 0.08 &&
-           FOG_COLOR.b > 0.20 &&
-           FOG_COLOR.b > FOG_COLOR.r * 1.20;
+bool detectEnd(float DIMENSION_ID) {
+  return DIMENSION_ID == 2.0;
 }
 
 bool detectNether(float DIMENSION_ID, vec3 FOG_COLOR, vec2 FOG_CONTROL) {
@@ -68,7 +66,7 @@ nl_environment nlDetectEnvironment(
     vec3 FOG_CONTROL
 ){
   nl_environment env;
-  env.end = detectEnd(FOG_COLOR);
+  env.end = detectEnd(DIMENSION_ID);
   env.nether = detectNether(DIMENSION_ID, FOG_COLOR, FOG_CONTROL.xy);
   env.underwater = !env.end && detectUnderwater(FOG_COLOR, FOG_CONTROL.xy);
   env.rainFactor = detectRain(FOG_CONTROL.xyz);
