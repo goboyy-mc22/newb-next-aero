@@ -85,7 +85,7 @@ void main() {
     bool isTree = false;
   #endif
 
-  nl_environment env = nlDetectEnvironment(DimensionID, TimeOfDay.x, 0.0, FogColor.rgb, FogAndDistanceControl.xyz);
+  nl_environment env = nlDetectEnvironment(2.0, TimeOfDay.x, 0.0, FogColor.rgb, FogAndDistanceControl.xyz);
   nl_skycolor skycol = nlSkyColors(env);
 
   // time
