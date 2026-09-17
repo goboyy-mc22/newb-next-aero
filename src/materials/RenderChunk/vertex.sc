@@ -13,6 +13,7 @@ uniform vec4 ViewPositionAndTime;
 uniform vec4 FogColor;
 uniform vec4 TimeOfDay;
 uniform vec4 CameraPosition;
+uniform float DimensionID;
 
 SAMPLER2D_AUTOREG(s_MatTexture);
 SAMPLER2D_AUTOREG(s_LightMapTexture);
@@ -85,7 +86,7 @@ void main() {
     bool isTree = false;
   #endif
 
-  nl_environment env = nlDetectEnvironment(2.0, TimeOfDay.x, 0.0, FogColor.rgb, FogAndDistanceControl.xyz);
+  nl_environment env = nlDetectEnvironment(DimensionID, TimeOfDay.x, 0.0, FogColor.rgb, FogAndDistanceControl.xyz);
   nl_skycolor skycol = nlSkyColors(env);
 
   // time
